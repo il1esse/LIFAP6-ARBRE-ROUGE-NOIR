@@ -41,7 +41,7 @@ class ANR
 
     void AfficherInfixe (Noeud *n, int nbespace) const;
 
-    void RotationDroite(Noeud * &a,Noeud * p);
+    void RotationDroite(Noeud * &pn);
 
     void MAJcouleur(Noeud * &n);
 
