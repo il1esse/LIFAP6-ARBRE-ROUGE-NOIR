@@ -11,8 +11,10 @@ Noeud::Noeud(Elem e)
 
 ANR::ANR()
 {
-    adracine = nullptr;
+    adracine = new Noeud(5);
+    adracine->c=0;
     nbelem = 0;
+
 }
 
 void ANR::insererElement(const Elem & e)
@@ -23,7 +25,6 @@ void ANR::insererElement(const Elem & e)
 
 int ANR::inseressArbre(Noeud* &a,const Elem & e)
 {
-
     int res;
     if(a == nullptr)
     {
@@ -36,18 +37,42 @@ int ANR::inseressArbre(Noeud* &a,const Elem & e)
         res = inseressArbre(a->fg , e);
         
         if(res==1)
-            if (a->c=1)
+        {
+            if ((a->c)==1)
+            {
                 return 2;
+            }    
+        }
+
         if(res==2)
-            if (a->fd->c=1)
-
+        {
+            if ((a->fd->c)==1)
+            {
+                MAJcouleur(a);
                 return 1;
-
-
+            }    
+        }
     }
     else
     {
-        inseressArbre(a->fd , e);
+        res = inseressArbre(a->fd , e);
+
+        if(res==1)
+        {
+            if ((a->c)==1)
+            {
+                return 2;
+            }    
+        }
+
+        if(res==2)
+        {
+            if ((a->fg->c)==1)
+            {
+                MAJcouleur(a);
+                return 1;
+            }    
+        }
     }
 }
 
@@ -99,7 +124,10 @@ void ANR::RotationDroite(Noeud * &a,Noeud * pn) // on travaille ici dans l'arbre
     pn = pt;
 }
 
-void ANR::MAJcouleur(Noeud &n)
+void ANR::MAJcouleur(Noeud * &n)
 {
+    n->c=1;
+    n->fd->c=0;
+    n->fg->c=0;
 }
 
