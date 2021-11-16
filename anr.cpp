@@ -31,47 +31,62 @@ int ANR::inseressArbre(Noeud* &a,const Elem & e)
         a = new Noeud(e);
         return 1;
     }
+
     else 
+    
     if(a->info > e)
     {
         res = inseressArbre(a->fg , e);
         
-        if(res==1)
+        if(res==1 && (a->c)==1)
         {
-            if ((a->c)==1)
-            {
                 return 2;
-            }    
         }
 
-        if(res==2)
+        if(a->fd != nullptr)
         {
-            if ((a->fd->c)==1)
+            if(res==2 && (a->fd->c)==1)
             {
-                MAJcouleur(a);
-                return 1;
-            }    
+                    MAJcouleur(a);
+                    return 1;
+            }
         }
+        else if(res==2)
+        {
+            return 3;
+        }
+
+        if(res==3)
+        {
+            RotationDroite(a->fd);
+        }
+
     }
     else
     {
         res = inseressArbre(a->fd , e);
 
-        if(res==1)
+        if(res==1 && (a->c)==1)
         {
-            if ((a->c)==1)
-            {
                 return 2;
-            }    
         }
 
-        if(res==2)
+        if(a->fg != nullptr)
         {
-            if ((a->fg->c)==1)
+            if(res==2 && (a->fg->c)==1)
             {
-                MAJcouleur(a);
-                return 1;
-            }    
+                    MAJcouleur(a);
+                    return 1;
+            }
+        }
+        else if(res==2)
+        {
+            return 3;
+        }
+
+        if(res==3)
+        {
+            RotationDroite(a->fg);
         }
     }
 }
@@ -114,7 +129,7 @@ void ANR::AfficherInfixe (Noeud *n, int nbespace) const
     }
 }
 
-void ANR::RotationDroite(Noeud * &a,Noeud * pn) // on travaille ici dans l'arbre *this
+void ANR::RotationDroite(Noeud * &pn) // on travaille ici dans l'arbre *this
 {
     //cout << nbelem // this->nbelm
     Noeud *pt;
