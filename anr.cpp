@@ -59,7 +59,7 @@ int ANR::inseressArbre(Noeud* &a,const Elem & e)
 
         if(res==3)
         {
-            RotationDroite(a->fd);
+            RotationDroite(a->fg);
         }
 
     }
@@ -141,6 +141,8 @@ void ANR::RotationDroite(Noeud * &pn) // on travaille ici dans l'arbre *this
     pn->fg = pt -> fd;
     pt -> fd = pn;
     pn = pt;
+    pn->c=0;
+    pn->fd->c=1;
 }
 
 void ANR::MAJcouleur(Noeud * &n)
