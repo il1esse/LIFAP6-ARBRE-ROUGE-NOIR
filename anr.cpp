@@ -11,8 +11,7 @@ Noeud::Noeud(Elem e)
 
 ANR::ANR()
 {
-    adracine = new Noeud(5);
-    adracine->c=0;
+    adracine = nullptr;
     nbelem = 0;
 
 }
@@ -29,12 +28,14 @@ int ANR::inseressArbre(Noeud* &a,const Elem & e)
     if(a == nullptr)
     {
         a = new Noeud(e);
+        if(nbelem == 0)
+        {
+            a->c=0;
+        }
         return 1;
     }
-
-    else 
     
-    if(a->info > e)
+    else if(a->info > e)
     {
         res = inseressArbre(a->fg , e);
         
@@ -71,7 +72,7 @@ int ANR::inseressArbre(Noeud* &a,const Elem & e)
                 return 2;
         }
 
-        if(a->fg != nullptr)
+         if(a->fg != nullptr)
         {
             if(res==2 && (a->fg->c)==1)
             {
@@ -81,12 +82,15 @@ int ANR::inseressArbre(Noeud* &a,const Elem & e)
         }
         else if(res==2)
         {
+            
             return 3;
         }
 
         if(res==3)
         {
-            RotationDroite(a->fg);
+
+               RotationDroite(a->fd); 
+            
         }
     }
 }
