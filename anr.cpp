@@ -21,9 +21,34 @@ void ANR::insererElement(const Elem & e)
     int res=inseressArbre(adracine, e);
     
     if(res==3)
+    {
+        if (adracine->fg->fg->fd != nullptr)
+            {
+            if(adracine->fg->fg->fd->info == e)
+            {
+                RotationGaucheDouble(adracine->fg->fg);
+                RotationDroite(adracine->fg);
+            }
+            else
+                RotationDroite(adracine);
+            }
+    }
+
+    if(res==3)
         RotationDroite(adracine);
     if(res==4)
-        RotationGauche(adracine);
+    {
+        if (adracine->fd->fd->fg != nullptr)
+        {
+            if(adracine->fd->fd->fg->info == e)
+            {
+                RotationDroiteDouble(adracine->fd->fd);
+                //RotationGauche(adracine->fd);
+            }
+        }
+        else
+            RotationGauche(adracine);   
+    }
     nbelem++;
 }
 
@@ -49,22 +74,31 @@ int ANR::inseressArbre(Noeud* &a,const Elem & e)
                 return 2;
         }
 
-        if(a->fd != nullptr)
+        if(res==2)
         {
-            if(res==2 && (a->fd->c)==1)
+            if(a->fd != nullptr)
             {
-                    MAJcouleur(a);
-                    return 1;
+                if((a->fd->c)==1)
+                {
+                        MAJcouleur(a);
+                        return 1;
+                }
             }
-        }
-        else if(res==2)
-        {
-            return 3;
+            if(a->fd == nullptr || (a->fd->c)==0)
+            {
+                return 3;
+            }
         }
 
         if(res==3)
         {
-            RotationDroite(a->fg);
+            if(a->fg->fg->fd->info == e)
+            {
+                RotationGaucheDouble(a->fg->fg);
+                RotationDroite(a->fg);
+            }
+            else
+                RotationDroite(a->fg);
         }
 
     }
@@ -77,25 +111,31 @@ int ANR::inseressArbre(Noeud* &a,const Elem & e)
                 return 2;
         }
 
-         if(a->fg != nullptr)
+        if(res==2)
         {
-            if(res==2 && (a->fg->c)==1)
+            if(a->fg != nullptr)
             {
-                    MAJcouleur(a);
-                    return 1;
+                if((a->fg->c)==1)
+                {
+                        MAJcouleur(a);
+                        return 1;
+                }
             }
-        }
-        else if(res==2)
-        {
-            
-            return 4;
+            if(a->fg == nullptr || (a->fg->c)==0)
+            {
+                return 4;
+            }
         }
 
         if(res==4)
         {
-
-               RotationGauche(a->fd); 
-            
+            if(a->fd->fd->fg->info == e)
+            {
+                RotationDroiteDouble(a->fd->fd);
+                RotationGauche(a->fd);
+            }
+            else
+                RotationGauche(a->fd);   
         }
     }
 }
@@ -150,12 +190,36 @@ void ANR::RotationDroite(Noeud * &pn) // on travaille ici dans l'arbre *this
     pn->fd->c=1;
 }
 
+void ANR::RotationDroiteDouble(Noeud * &pn) // on travaille ici dans l'arbre *this
+{
+    //cout << nbelem // this->nbelm
+    Noeud *pt;
+    pt = pn -> fg;
+    //pn->fg = pt -> fd;
+    pt -> fd = pn;
+    pn = pt;
+    pn->c=0;
+    pn->fd->c=1;
+}
+
 void ANR::RotationGauche(Noeud * &pn) // on travaille ici dans l'arbre *this
 {
     //cout << nbelem // this->nbelm
     Noeud *pt;
     pt = pn -> fd;
     pn->fd = pt -> fg;
+    pt -> fg = pn;
+    pn = pt;
+    pn->c=0;
+    pn->fg->c=1;
+}
+
+void ANR::RotationGaucheDouble(Noeud * &pn) // on travaille ici dans l'arbre *this
+{
+    //cout << nbelem // this->nbelm
+    Noeud *pt;
+    pt = pn -> fd;
+    //pn->fd = pt -> fg;
     pt -> fg = pn;
     pn = pt;
     pn->c=0;
