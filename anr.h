@@ -43,6 +43,8 @@ class ANR
 
     void RotationDroite(Noeud* &pn);
 
+    void RotationGauche(Noeud * &pn);
+
     void MAJcouleur(Noeud * &n);
 
 

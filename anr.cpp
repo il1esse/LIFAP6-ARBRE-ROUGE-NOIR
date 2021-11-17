@@ -18,7 +18,12 @@ ANR::ANR()
 
 void ANR::insererElement(const Elem & e)
 {
-    inseressArbre(adracine, e);
+    int res=inseressArbre(adracine, e);
+    
+    if(res==3)
+        RotationDroite(adracine);
+    if(res==4)
+        RotationGauche(adracine);
     nbelem++;
 }
 
@@ -83,13 +88,13 @@ int ANR::inseressArbre(Noeud* &a,const Elem & e)
         else if(res==2)
         {
             
-            return 3;
+            return 4;
         }
 
-        if(res==3)
+        if(res==4)
         {
 
-               RotationDroite(a->fd); 
+               RotationGauche(a->fd); 
             
         }
     }
@@ -143,6 +148,18 @@ void ANR::RotationDroite(Noeud * &pn) // on travaille ici dans l'arbre *this
     pn = pt;
     pn->c=0;
     pn->fd->c=1;
+}
+
+void ANR::RotationGauche(Noeud * &pn) // on travaille ici dans l'arbre *this
+{
+    //cout << nbelem // this->nbelm
+    Noeud *pt;
+    pt = pn -> fd;
+    pn->fd = pt -> fg;
+    pt -> fg = pn;
+    pn = pt;
+    pn->c=0;
+    pn->fg->c=1;
 }
 
 void ANR::MAJcouleur(Noeud * &n)
