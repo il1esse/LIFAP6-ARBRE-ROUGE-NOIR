@@ -117,7 +117,7 @@ void ANR::AfficherInfixe (Noeud *n, int nbespace) const
 {
     if(n != nullptr)
     {
-        AfficherInfixe(n->fg, nbespace+5);
+        AfficherInfixe(n->fd, nbespace+5);
         std::cout<<std::endl;
         for(int i=0; i<nbespace;i++)
             std::cout<<" ";
@@ -125,7 +125,7 @@ void ANR::AfficherInfixe (Noeud *n, int nbespace) const
         std::cout<<" C=";
         afficheElement(n->c);
         std::cout<<std::endl;
-        AfficherInfixe(n->fd, nbespace+5);
+        AfficherInfixe(n->fg, nbespace+5);
     }
 }
 
