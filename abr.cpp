@@ -85,6 +85,7 @@ void ABR::AfficherInfixe (Noeud *n, int nbespace) const
 bool ABR::recherche(const Elem & e)
 {
     bool a =recherchessarbre(adracine,e);
+    std::cout<<adracine->info;
     std::cout<<a;
     return a;
     
@@ -92,7 +93,8 @@ bool ABR::recherche(const Elem & e)
 
 bool ABR::recherchessarbre(Noeud* &a, const Elem &e)
 {
-    if(a->info == e){
+    /*if(a->info == e)
+    {
         return true;
     }
     else 
@@ -100,5 +102,19 @@ bool ABR::recherchessarbre(Noeud* &a, const Elem &e)
         recherchessarbre(a->fd,e);
         recherchessarbre(a->fg,e);
     }
-    return false;
+    return false;*/
+
+    if(a == nullptr)
+    {
+        return false;
+    }
+    else if (a->info == e)
+    {
+        return true;
+    }
+    else
+    {
+        recherchessarbre(a->fd,e);
+        recherchessarbre(a->fg,e);
+    }
 }

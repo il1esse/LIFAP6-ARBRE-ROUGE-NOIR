@@ -22,32 +22,36 @@ void ANR::insererElement(const Elem & e)
     
     if(res==3)
     {
-        if (adracine->fg->fg->fd != nullptr)
+        if (adracine->fg->fd != nullptr)
+        {
+            if(adracine->fg->fd->info == e)
             {
-            if(adracine->fg->fg->fd->info == e)
-            {
-                RotationGaucheDouble(adracine->fg->fg);
-                RotationDroite(adracine->fg);
-            }
-            else
+                RotationGauche(adracine->fg);
                 RotationDroite(adracine);
             }
+            
+            
+        }
+        else
+        RotationDroite(adracine);
     }
 
-    if(res==3)
-        RotationDroite(adracine);
     if(res==4)
     {
-        if (adracine->fd->fd->fg != nullptr)
+        if (adracine->fd->fg != nullptr) //(adracine->fd->fg != nullptr) cas 0108 ---(en cours cas cours)
         {
-            if(adracine->fd->fd->fg->info == e)
+            if(adracine->fd->fg->info == e)
             {
-                RotationDroiteDouble(adracine->fd->fd);
-                //RotationGauche(adracine->fd);
+                RotationDroite(adracine->fd);
+                RotationGauche(adracine);
+                
             }
         }
         else
-            RotationGauche(adracine);   
+        {
+            RotationGauche(adracine);
+        }
+            
     }
     nbelem++;
 }
@@ -55,54 +59,63 @@ void ANR::insererElement(const Elem & e)
 int ANR::inseressArbre(Noeud* &a,const Elem & e)
 {
     int res;
-    if(a == nullptr)
+    if(a == nullptr)  //INSERTION ELEMENT
     {
         a = new Noeud(e);
-        if(nbelem == 0)
+        if(nbelem == 0) 
         {
             a->c=0;
         }
         return 1;
     }
     
-    else if(a->info > e)
+    else if(a->info > e) 
     {
         res = inseressArbre(a->fg , e);
         
-        if(res==1 && (a->c)==1)
+        if(res==1 && (a->c)==1) //SI MON FILS EST ROUGE ET QUE JE SUIS ROUGE JE RETURN 2
         {
                 return 2;
         }
 
-        if(res==2)
+        if(res==2) //SI MON FILS ET PETIT FILS SONT ROUGE ( COTE GAUCHE)
         {
-            if(a->fd != nullptr)
+            if(a->fd != nullptr) //SI MON FILS DROIT EXISTE
             {
-                if((a->fd->c)==1)
+                if((a->fd->c)==1) //ET IL EST ROUGE
                 {
-                        MAJcouleur(a);
+                        MAJcouleur(a); // ALORS MES 2 FILS DEVIENNENT NOIR MON PETIT FILS RESTE ROUGE ET JE DEVIENS ROUGE
                         return 1;
                 }
             }
-            if(a->fd == nullptr || (a->fd->c)==0)
+            if(a->fd == nullptr || (a->fd->c)==0) //SI MON FILS DROIT NEXISTE PAS OU QUIL EST DE COULEUR NOIR ALORS JE RETURN 3
             {
-                return 3;
+                return 3; 
+                //RotationDroite(a->fg);
             }
         }
 
-        if(res==3)
+        if(res==3) //(ARRIERE GRAND PERE) SI MON FILS N'A PAS DE FILS DROIT OU QUIL EST NOIR ALORS JE TOURNE A GAUCHE AVEC MON PETIT FILS 
+        //DROITE AVEC MON FILS
         {
-            if(a->fg->fg->fd->info == e)
-            {
-                RotationGaucheDouble(a->fg->fg);
-                RotationDroite(a->fg);
-            }
+            if(a->fg->fg->fd != nullptr)
+                {
+                    if(a->fg->fg->fd->info ==e) 
+                    {
+                        RotationGaucheDouble(a->fg->fg);
+                        RotationDroite(a->fg);
+                    }
+                    
+                }
             else
+            {
                 RotationDroite(a->fg);
+
+            }
         }
 
     }
-    else
+    else //si l'info du noeud est plus petit que l'element que l'on veut insérer
     {
         res = inseressArbre(a->fd , e);
 
@@ -123,21 +136,30 @@ int ANR::inseressArbre(Noeud* &a,const Elem & e)
             }
             if(a->fg == nullptr || (a->fg->c)==0)
             {
-                return 4;
+                return 4; 
+                //RotationGauche(a);  
             }
         }
 
         if(res==4)
         {
-            if(a->fd->fd->fg->info == e)
+            if(a->fd->fd->fg != nullptr)
             {
-                RotationDroiteDouble(a->fd->fd);
-                RotationGauche(a->fd);
+                if(a->fd->fd->fg->info == e)
+                {
+                    RotationDroite(a->fd->fd);
+                    RotationGauche(a->fd);
+                }
             }
             else
-                RotationGauche(a->fd);   
-        }
+            {
+                RotationGauche(a->fd);
+            }
+        
+        
+             
     }
+}
 }
 
 void ANR::affichage()
