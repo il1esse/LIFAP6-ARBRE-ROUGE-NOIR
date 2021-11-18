@@ -58,6 +58,7 @@ class ANR
     int Hauteurmin(Noeud *&n);
     int Hauteurmax(Noeud *&n);
 
+    int DiffHauteur(Noeud *&n);
 
     Noeud * adracine;
     

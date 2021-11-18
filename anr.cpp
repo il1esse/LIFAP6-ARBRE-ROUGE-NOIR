@@ -1,6 +1,8 @@
 #include "anr.h"
 #include <iostream>
 
+using namespace std;
+
 Noeud::Noeud(Elem e)
 {
     info = e;
@@ -20,7 +22,6 @@ ANR::ANR()
 void ANR::insererElement(const Elem & e)
 {
     int res=inseressArbre(adracine, e);
-    
     if(res==3)
     {
         if (adracine->fg->fd != nullptr)
@@ -69,11 +70,12 @@ int ANR::inseressArbre(Noeud* &a,const Elem & e)
         }
         return 1;
     }
-    
     else if(a->info > e) 
     {
+        a->diff=DiffHauteur(a);
+        //cout<<"info = "<<a->info<<endl<<DiffHauteur(a)<<endl;
         res = inseressArbre(a->fg , e);
-        
+ 
         if(res==1 && (a->c)==1) //SI MON FILS EST ROUGE ET QUE JE SUIS ROUGE JE RETURN 2
         {
                 return 2;
@@ -92,8 +94,8 @@ int ANR::inseressArbre(Noeud* &a,const Elem & e)
             if(a->fd == nullptr || (a->fd->c)==0) //SI MON FILS DROIT NEXISTE PAS OU QUIL EST DE COULEUR NOIR ALORS JE RETURN 3
             {
                 
-                RotationDroite(a);
-                //return 3; 
+                //RotationDroite(a);
+                return 3; 
             }
         }
 
@@ -119,6 +121,8 @@ int ANR::inseressArbre(Noeud* &a,const Elem & e)
     }
     else //si l'info du noeud est plus petit que l'element que l'on veut insérer
     {
+        a->diff=DiffHauteur(a);
+        //cout<<"info = "<<a->info<<endl<<DiffHauteur(a)<<endl;
         res = inseressArbre(a->fd , e);
 
         if(res==1 && (a->c)==1)
@@ -139,8 +143,8 @@ int ANR::inseressArbre(Noeud* &a,const Elem & e)
             if(a->fg == nullptr || (a->fg->c)==0)
             {
                 
-                RotationGauche(a);
-                //return 4;
+                //RotationGauche(a);
+                return 4;
             }
         }
 
@@ -157,12 +161,9 @@ int ANR::inseressArbre(Noeud* &a,const Elem & e)
             else
             {
                 RotationGauche(a->fd);
-            }
-        
-        
-             
+            }     
+        }
     }
-}
 }
 
 void ANR::affichage()
@@ -201,6 +202,8 @@ void ANR::AfficherInfixe (Noeud *n, int nbespace) const
         afficheElement(n->info);
         std::cout<<" C=";
         afficheElement(n->c);
+        std::cout<<" diff=";
+        afficheElement(n->diff);
         std::cout<<std::endl;
         AfficherInfixe(n->fg, nbespace+5);
     }
@@ -363,4 +366,13 @@ void ANR::afficherhauteurmax(Noeud *&n)
     int b = Hauteurmax(n);
     std::cout<<"max : "<<b<<std::endl;;
 
+}
+
+int ANR::DiffHauteur(Noeud *&n)
+{
+    //std::cout<<Hauteurmax(adracine)<<std::endl;
+    //std::cout<<Hauteurmin(adracine)<<std::endl;
+    int h =Hauteurmax(adracine) - Hauteurmin(adracine);
+    std::cout<<h<<std::endl;
+    return h;
 }

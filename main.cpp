@@ -40,11 +40,11 @@ int main()
     arbre.insererElement(1);
     arbre.insererElement(6);
     //arbre.insererElement(7);
-    //arbre.insererElement(5);
+    arbre.insererElement(5);
     //arbre.insererElement(2);
 
-    //arbre.insererElement(6);
-    
+    //arbre.insererElement(6);*/
+
 
     arbre.affichage();
     return 0;
