@@ -376,3 +376,33 @@ int ANR::DiffHauteur(Noeud *&n)
     std::cout<<h<<std::endl;
     return h;
 }
+
+/*void ANR::Rotation_Double_Droite(Noeud *&pn)
+{
+    Noeud * pg;
+    Noeud * pgd;
+
+    pg = pn->fg;
+    pgd = pn->fg->fd;
+    pg->fd = pgd ->fg;
+    pgd->fg = pg;
+    pn->fg = pgd -> fd;
+    pgd->fd = pn;
+    pn = pgd;
+}*/
+
+void ANR::equilibrer(Noeud *&pn)
+{
+    if(pn->diff==2)
+    {
+        if(pn->fg->diff == 1)
+        {
+            RotationDroite(pn);
+        }
+        else
+        {
+            Rotation_Double_Droite(pn);
+        }
+    }
+    else if(pn ->fd -> diff ==)
+}

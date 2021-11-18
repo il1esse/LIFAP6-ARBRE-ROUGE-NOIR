@@ -60,6 +60,10 @@ class ANR
 
     int DiffHauteur(Noeud *&n);
 
+    void equilibrer(Noeud *&pn);
+
+    void Rotation_Double_Droite(Noeud *&pn);
+
     Noeud * adracine;
     
     int nbelem;
