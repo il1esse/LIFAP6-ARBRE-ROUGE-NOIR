@@ -7,6 +7,7 @@ Noeud::Noeud(Elem e)
     fg = nullptr;
     fd = nullptr;
     c = 1;
+    diff = 0;
 }
 
 ANR::ANR()
@@ -90,8 +91,9 @@ int ANR::inseressArbre(Noeud* &a,const Elem & e)
             }
             if(a->fd == nullptr || (a->fd->c)==0) //SI MON FILS DROIT NEXISTE PAS OU QUIL EST DE COULEUR NOIR ALORS JE RETURN 3
             {
-                return 3; 
-                //RotationDroite(a->fg);
+                
+                RotationDroite(a);
+                //return 3; 
             }
         }
 
@@ -136,8 +138,9 @@ int ANR::inseressArbre(Noeud* &a,const Elem & e)
             }
             if(a->fg == nullptr || (a->fg->c)==0)
             {
-                return 4; 
-                //RotationGauche(a);  
+                
+                RotationGauche(a);
+                //return 4;
             }
         }
 
@@ -167,6 +170,9 @@ void ANR::affichage()
     //RotationDroite(adracine,adracine->fd);
     //affichessArbre(adracine);
     AfficherInfixe(adracine,1);
+    afficherhauteurmin(adracine);
+    afficherhauteurmax(adracine);
+    
 }
 
 void ANR::affichessArbre(Noeud* &a)
@@ -255,3 +261,106 @@ void ANR::MAJcouleur(Noeud * &n)
     n->fg->c=0;
 }
 
+int ANR::Hauteurmin(Noeud *&n)
+{
+    int a;
+    int b;
+    int c;
+    if(n != nullptr)
+    {
+        if(n->fg != nullptr)
+        {
+            if(n->fd == nullptr)
+            {
+                a = Hauteurmin(n->fg);
+                return a + 1;
+            }
+            a = Hauteurmin(n->fg);
+        }
+        if(n->fd != nullptr)
+        {
+            if(n->fg == nullptr)
+            {
+                b = Hauteurmin(n->fd);
+                return b + 1;
+            }
+            b = Hauteurmin(n->fd);
+        }
+        if((n->fg == nullptr) && (n->fd == nullptr))
+        {
+            return 1;
+        }
+        if(a>=b)
+        {
+            c = b;
+        }
+        else
+        {
+            c = a;
+        }
+        return 1 + c ;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+void ANR::afficherhauteurmin(Noeud *&n)
+{
+    int b = Hauteurmin(n);
+    std::cout<<"min : "<<b<<std::endl;;
+
+}
+
+int ANR::Hauteurmax(Noeud *&n)
+{
+    int a;
+    int b;
+    int c;
+    if(n != nullptr)
+    {
+        if(n->fg != nullptr)
+        {
+            if(n->fd == nullptr)
+            {
+                a = Hauteurmax(n->fg);
+                return a + 1;
+            }
+            a = Hauteurmax(n->fg);
+        }
+        if(n->fd != nullptr)
+        {
+            if(n->fg == nullptr)
+            {
+                b = Hauteurmax(n->fd);
+                return b + 1;
+            }
+            b = Hauteurmax(n->fd);
+        }
+        if((n->fg == nullptr) && (n->fd == nullptr))
+        {
+            return 1;
+        }
+        if(a<=b)
+        {
+            c = b;
+        }
+        else
+        {
+            c = a;
+        }
+        return 1 + c ;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+void ANR::afficherhauteurmax(Noeud *&n)
+{
+    int b = Hauteurmax(n);
+    std::cout<<"max : "<<b<<std::endl;;
+
+}

@@ -18,7 +18,8 @@ class Noeud
     Elem info;
     Noeud *fg;
     Noeud *fd;
-    int c; 
+    int c;
+    int diff;
 };
 
 class ANR
@@ -33,6 +34,9 @@ class ANR
     void affichage();
 
     void affichessArbre(Noeud* &a);
+
+    void afficherhauteurmin(Noeud *&n);
+    void afficherhauteurmax(Noeud *&n);
 
     private: 
     
@@ -50,6 +54,9 @@ class ANR
     void RotationGaucheDouble(Noeud * &pn);
 
     void MAJcouleur(Noeud * &n);
+
+    int Hauteurmin(Noeud *&n);
+    int Hauteurmax(Noeud *&n);
 
 
     Noeud * adracine;
