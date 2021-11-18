@@ -58,11 +58,14 @@ class ANR
     int Hauteurmin(Noeud *&n);
     int Hauteurmax(Noeud *&n);
 
+/*
     int DiffHauteur(Noeud *&n);
 
     void equilibrer(Noeud *&pn);
 
     void Rotation_Double_Droite(Noeud *&pn);
+
+    void DiffHauteur2(Noeud * &n); */
 
     Noeud * adracine;
     

@@ -55,6 +55,26 @@ void ANR::insererElement(const Elem & e)
         }
             
     }
+
+
+    //DiffHauteur2(adracine);
+
+    //if(adracine->diff)
+
+    int h = (Hauteurmax(adracine) - Hauteurmin(adracine));
+
+    cout<<h<<endl;
+
+    if(Hauteurmax(adracine)>2*(Hauteurmin(adracine)))
+    {
+        if(adracine->info>e)
+        {
+            RotationDroite(adracine);
+        }
+        else
+            RotationGauche(adracine);
+    }   
+
     nbelem++;
 }
 
@@ -72,7 +92,7 @@ int ANR::inseressArbre(Noeud* &a,const Elem & e)
     }
     else if(a->info > e) 
     {
-        a->diff=DiffHauteur(a);
+        //a->diff=DiffHauteur(a);
         //cout<<"info = "<<a->info<<endl<<DiffHauteur(a)<<endl;
         res = inseressArbre(a->fg , e);
  
@@ -121,7 +141,7 @@ int ANR::inseressArbre(Noeud* &a,const Elem & e)
     }
     else //si l'info du noeud est plus petit que l'element que l'on veut insérer
     {
-        a->diff=DiffHauteur(a);
+        //a->diff=DiffHauteur(a);
         //cout<<"info = "<<a->info<<endl<<DiffHauteur(a)<<endl;
         res = inseressArbre(a->fd , e);
 
@@ -368,6 +388,8 @@ void ANR::afficherhauteurmax(Noeud *&n)
 
 }
 
+/*
+
 int ANR::DiffHauteur(Noeud *&n)
 {
     //std::cout<<Hauteurmax(adracine)<<std::endl;
@@ -391,8 +413,13 @@ int ANR::DiffHauteur(Noeud *&n)
     pn = pgd;
 }*/
 
+/*
 void ANR::equilibrer(Noeud *&pn)
 {
+    if(pn)
+    {
+
+    }
     if(pn->diff==2)
     {
         if(pn->fg->diff == 1)
@@ -406,3 +433,23 @@ void ANR::equilibrer(Noeud *&pn)
     }
     else if(pn ->fd -> diff ==)
 }
+*/
+/*
+void ANR::DiffHauteur2(Noeud * &n)
+{
+    int h = Hauteurmax(adracine) - Hauteurmin(adracine);
+    n->diff=h;
+
+    if(n->fg != nullptr)
+    {
+        n->fg->diff=h;
+        DiffHauteur2(n->fg);
+    }
+    if(n->fd != nullptr)
+    {
+        n->fd->diff=h;
+        DiffHauteur2(n->fd);
+    }
+}
+
+*/
