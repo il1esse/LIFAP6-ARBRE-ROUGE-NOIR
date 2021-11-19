@@ -26,28 +26,38 @@ void ANR::insererElement(const Elem & e)
     {
         if (adracine->fg->fd != nullptr)
         {
-            if(adracine->fg->fd->info == e)
+            if(adracine->fg->fd->c==1)
             {
                 RotationGauche(adracine->fg);
                 RotationDroite(adracine);
             }
-            
-            
+            else
+            {
+                RotationDroite(adracine);
+            }            
+                
         }
         else
-        RotationDroite(adracine);
+        {
+            RotationDroite(adracine);
+        }
+
     }
 
     if(res==4)
     {
         if (adracine->fd->fg != nullptr) //(adracine->fd->fg != nullptr) cas 0108 ---(en cours cas cours)
         {
-            if(adracine->fd->fg->info == e)
+            if(adracine->fd->fg->c==1)
             {
                 RotationDroite(adracine->fd);
                 RotationGauche(adracine);
                 
             }
+            else
+            {
+                RotationGauche(adracine);
+            }            
         }
         else
         {
@@ -124,9 +134,13 @@ int ANR::inseressArbre(Noeud* &a,const Elem & e)
         {
             if(a->fg->fg->fd != nullptr)
                 {
-                    if(a->fg->fg->fd->info ==e) 
+                    if(a->fg->fg->fd->c==1) 
                     {
                         RotationGaucheDouble(a->fg->fg);
+                        RotationDroite(a->fg);
+                    }
+                    else
+                    {
                         RotationDroite(a->fg);
                     }
                     
@@ -172,9 +186,13 @@ int ANR::inseressArbre(Noeud* &a,const Elem & e)
         {
             if(a->fd->fd->fg != nullptr)
             {
-                if(a->fd->fd->fg->info == e)
+                if(a->fd->fd->fg->c==1)
                 {
                     RotationDroite(a->fd->fd);
+                    RotationGauche(a->fd);
+                }
+                else
+                {
                     RotationGauche(a->fd);
                 }
             }
@@ -222,8 +240,8 @@ void ANR::AfficherInfixe (Noeud *n, int nbespace) const
         afficheElement(n->info);
         std::cout<<" C=";
         afficheElement(n->c);
-        std::cout<<" diff=";
-        afficheElement(n->diff);
+        //std::cout<<" diff=";
+        //afficheElement(n->diff);
         std::cout<<std::endl;
         AfficherInfixe(n->fg, nbespace+5);
     }
