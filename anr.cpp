@@ -71,9 +71,9 @@ void ANR::insererElement(const Elem & e)
 
     //if(adracine->diff)
 
-    int h = (Hauteurmax(adracine) - Hauteurmin(adracine));
+    //int h = (Hauteurmax(adracine) - Hauteurmin(adracine));
 
-    cout<<h<<endl;
+    //cout<<h<<endl;
 
     if(Hauteurmax(adracine)>2*(Hauteurmin(adracine)))
     {
@@ -86,6 +86,7 @@ void ANR::insererElement(const Elem & e)
     }   
 
     nbelem++;
+    adracine->c=0;
 }
 
 int ANR::inseressArbre(Noeud* &a,const Elem & e)
