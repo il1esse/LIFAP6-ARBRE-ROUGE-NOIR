@@ -1,13 +1,22 @@
+all: mainabr.ex mainperf.ex mainanr.ex
 
+mainabr.ex: mainabr.o element.o abr.o
+	g++ -ggdb mainabr.o element.o abr.o -o mainabr.ex
+	
+mainanr.ex: mainanr.o element.o anr.o
+	g++ -ggdb mainanr.o element.o anr.o -o mainanr.ex
 
-main.ex: main.o element.o anr.o
-	g++ -ggdb main.o element.o anr.o -o main.ex
+mainperf.ex: mainperf.o element.o anr.o
+	g++ -ggdb mainperf.o element.o anr.o -o mainperf.ex
 
-main.o : main.cpp element.h  anr.h
-	g++ -ggdb -Wall -c main.cpp
-
-mainabr.o : mainabr.cpp element.h  abr.h
+mainabr.o : mainabr.cpp element.h abr.h
 	g++ -ggdb -Wall -c mainabr.cpp
+
+mainanr.o : mainanr.cpp element.h anr.h
+	g++ -ggdb -Wall -c mainanr.cpp
+
+mainperf.o : mainperf.cpp element.h anr.h
+	g++ -ggdb -Wall -c mainperf.cpp
 
 element.o : element.cpp element.h
 	g++ -ggdb -Wall -c element.cpp
@@ -17,8 +26,10 @@ anr.o : anr.cpp anr.h
 
 abr.o : abr.cpp abr.h
 	g++ -ggdb -Wall -c abr.cpp
+	
+
 clean :
 	-rm *.o 
-
+	-rm *.ex
 veryclean : clean 
 	-rm *.ex

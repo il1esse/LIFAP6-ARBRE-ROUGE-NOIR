@@ -1,5 +1,6 @@
 #include "abr.h"
 #include <iostream>
+#include <fstream> //ifstream, ofstream
 
 Noeud::Noeud(Elem e)
 {
@@ -85,8 +86,8 @@ void ABR::AfficherInfixe (Noeud *n, int nbespace) const
 bool ABR::recherche(const Elem & e)
 {
     bool a =recherchessarbre(adracine,e);
-    std::cout<<adracine->info;
-    std::cout<<a;
+    //std::cout<<adracine->info<<std::endl;
+    std::cout<<a<<std::endl;
     return a;
     
 }
@@ -112,9 +113,33 @@ bool ABR::recherchessarbre(Noeud* &a, const Elem &e)
     {
         return true;
     }
-    else
+    else if(a->info > e)
     {
         recherchessarbre(a->fd,e);
-        recherchessarbre(a->fg,e);
+        
     }
+    else
+    {
+         recherchessarbre(a->fg,e);
+    }
+       
+}
+
+void ABR::creeFichierEntiers(const char * nomFichier, int nb)
+//preconditions : nomFichier chaine de caracteres designant le nom du fichier a creer
+//postcondition : le fichier nomFichier contient nb entiers separes par des espaces
+{
+std::ofstream ofs;
+ ofs.open(nomFichier);
+if(ofs.bad()) 
+    {std::cout<<"Impossible d'ouvrir le fichier "<<nomFichier<<" en ecriture \n"; exit(1);}
+
+for(int i=0;i<nb;i++)
+ {
+    int temp;
+    std::cout << "Entier suivant : ";
+    std::cin >> temp; //Ou utilisez la version robuste de saisie d'un int
+     ofs << temp <<' ';//Remarquez que l'on separe les int par des espaces
+    }
+ofs.close();
 }

@@ -137,7 +137,7 @@ int ANR::inseressArbre(Noeud* &a,const Elem & e)
                 {
                     if(a->fg->fg->fd->c==1) 
                     {
-                        RotationGaucheDouble(a->fg->fg);
+                        RotationGauche(a->fg->fg);
                         RotationDroite(a->fg);
                     }
                     else
@@ -210,8 +210,8 @@ void ANR::affichage()
     //RotationDroite(adracine,adracine->fd);
     //affichessArbre(adracine);
     AfficherInfixe(adracine,1);
-    afficherhauteurmin(adracine);
-    afficherhauteurmax(adracine);
+    //afficherhauteurmin(adracine);
+    //afficherhauteurmax(adracine);
     
 }
 
@@ -220,11 +220,11 @@ void ANR::affichessArbre(Noeud* &a)
     if(a != nullptr)
     {
         if(a->fg !=nullptr && a->fd !=nullptr)
-        std::cout<<"    "<<a->fg->info<<"   "<<a->fd->info<<"   "<<std::endl;
+            std::cout<<"    "<<a->fg->info<<"   "<<a->fd->info<<"   "<<std::endl;
         else if(a->fg !=nullptr)
-        std::cout<<"    "<<a->fg->info<<"   ";
+            std::cout<<"    "<<a->fg->info<<"   ";
         else if(a->fd !=nullptr)
-        std::cout<<"    "<<a->fd->info<<"   "<<std::endl;
+            std::cout<<"    "<<a->fd->info<<"   "<<std::endl;
         affichessArbre(a->fg);
         affichessArbre(a->fd);
     }
@@ -260,7 +260,7 @@ void ANR::RotationDroite(Noeud * &pn) // on travaille ici dans l'arbre *this
     pn->fd->c=1;
 }
 
-void ANR::RotationDroiteDouble(Noeud * &pn) // on travaille ici dans l'arbre *this
+/*void ANR::RotationDroiteDouble(Noeud * &pn) // on travaille ici dans l'arbre *this
 {
     //cout << nbelem // this->nbelm
     Noeud *pt;
@@ -270,7 +270,7 @@ void ANR::RotationDroiteDouble(Noeud * &pn) // on travaille ici dans l'arbre *th
     pn = pt;
     pn->c=0;
     pn->fd->c=1;
-}
+}*/
 
 void ANR::RotationGauche(Noeud * &pn) // on travaille ici dans l'arbre *this
 {
@@ -284,7 +284,7 @@ void ANR::RotationGauche(Noeud * &pn) // on travaille ici dans l'arbre *this
     pn->fg->c=1;
 }
 
-void ANR::RotationGaucheDouble(Noeud * &pn) // on travaille ici dans l'arbre *this
+/*void ANR::RotationGaucheDouble(Noeud * &pn) // on travaille ici dans l'arbre *this
 {
     //cout << nbelem // this->nbelm
     Noeud *pt;
@@ -294,7 +294,7 @@ void ANR::RotationGaucheDouble(Noeud * &pn) // on travaille ici dans l'arbre *th
     pn = pt;
     pn->c=0;
     pn->fg->c=1;
-}
+}*/
 
 void ANR::MAJcouleur(Noeud * &n)
 {
@@ -404,7 +404,6 @@ void ANR::afficherhauteurmax(Noeud *&n)
 {
     int b = Hauteurmax(n);
     std::cout<<"max : "<<b<<std::endl;;
-
 }
 
 /*

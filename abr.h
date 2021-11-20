@@ -23,6 +23,7 @@ class ABR
    
     public :
     ABR();
+    //ABR::ABR(const ABR &abr);
     //~ABR();
     
     void insererElement(const Elem & e);
@@ -32,6 +33,8 @@ class ABR
     void affichessArbre(Noeud* &a);
 
     bool recherche(const Elem & e); 
+
+    void creeFichierEntiers(const char * nomFichier, int nb);
     
     private: 
     
@@ -42,6 +45,7 @@ class ABR
     
     bool recherchessarbre(Noeud* &a, const Elem &e);
 
+   
 
     Noeud * adracine;
     

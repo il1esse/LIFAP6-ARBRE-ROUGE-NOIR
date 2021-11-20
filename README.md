@@ -1,2 +1,0 @@
-# LIFAP6 ANR
-
