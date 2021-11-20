@@ -12,66 +12,58 @@
 
 
 
-int perf(int nbinsertion)
+void perf(const char * nomFichier,int nbinsertion)
 {
-    int nbarbre = 10, i, j;
-    //ABR arbre;
-    ABR bonjour[nbarbre];
+    std::ofstream ofs;
+    ofs.open(nomFichier);
+if(ofs.bad()) 
+    {std::cout<<"Impossible d'ouvrir le fichier "<<nomFichier<<" en ecriture \n"; exit(1);}
+
+else
+{
+    int nbarbre = 10;
+    ABR arbre;
+    //ABR bonjour[nbarbre];
     //ABR * tab[nbSkipList];
 
     std::chrono::time_point<std::chrono::system_clock> start, end;
 
     int tabmesure[nbarbre];
-    for (int i =0; i<nbarbre;i++)
+    for (int i =0; i<nbinsertion;i++)
     { 
-        ABR arbre;
-        start = std::chrono::system_clock::now();
-        for (j = 0; j < nbinsertion; j++)
+        //ABR arbre;
+        int sommemesure =0;
+        for (int j = 1; j <= nbarbre; j++)
         {
+            start = std::chrono::system_clock::now();
             int r=rand()%1000;
             std::cout<<r<<std::endl;
             arbre.insererElement(r);
+            end = std::chrono::system_clock::now();
+            tabmesure[j] = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+            sommemesure = sommemesure +tabmesure[j];
+            
         }  
-        end = std::chrono::system_clock::now();
+        
+        int moyennemesure = sommemesure / nbarbre;
+        
         //std::cout<<i<<tabmesure[i]<<std::endl;
-        tabmesure[i] = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+        
+        
+
+    
+        ofs<<i<<"  "<<moyennemesure<<std::endl;
     }
         
-    int sommemesure =0;
-    for (int i =0; i<nbarbre;i++)
-    {
-        sommemesure = sommemesure +tabmesure[i];
-    }
-
-    int moyennemesure = sommemesure / nbarbre;
+    
     
 
     //std::cout << "Temps d'insertion moyen : " << moyennemesure << "ms" << std::endl;
-    return moyennemesure;
-}
-
-void ecrireFichierEntiers(const char * nomFichier,int nbinsertionmax)
-//preconditions : nomFichier chaine de caracteres designant le nom du fichier a creer
-//postcondition : le fichier nomFichier contient nb entiers separes par des espaces
-{
-std::ofstream ofs;
- ofs.open(nomFichier);
-if(ofs.bad()) 
-    {std::cout<<"Impossible d'ouvrir le fichier "<<nomFichier<<" en ecriture \n"; exit(1);}
-
-else
-{   
-    //ofs<<"# nbinsertion"<<"  "<<"temps moyen"<<std::endl;
-    for(int i=0; i<=10;i++)
-    {
-        int a = perf((nbinsertionmax/10) * i);
-        ofs<<nbinsertionmax/10*i<<"  "<<a<<std::endl;
-    }
-}
-
+    
 ofs.close();
 }
-
+    
+}
 
 
 
@@ -83,7 +75,7 @@ int main()
     std::cin>>nbinsertionmax;
 
     //int moyennemesure = perf(i);
-    ecrireFichierEntiers("performance",nbinsertionmax);
+    perf("performance",nbinsertionmax);
 
     return 0;
 }
