@@ -1,4 +1,4 @@
-all: mainabr.ex mainperf.ex mainanr.ex
+all: mainabr.ex mainperfABR.ex mainperfANR.ex mainanr.ex
 
 mainabr.ex: mainabr.o element.o abr.o
 	g++ -ggdb mainabr.o element.o abr.o -o mainabr.ex
@@ -6,8 +6,11 @@ mainabr.ex: mainabr.o element.o abr.o
 mainanr.ex: mainanr.o element.o anr.o
 	g++ -ggdb mainanr.o element.o anr.o -o mainanr.ex
 
-mainperf.ex: mainperf.o element.o anr.o
-	g++ -ggdb mainperf.o element.o anr.o -o mainperf.ex
+mainperfABR.ex: mainperfABR.o element.o abr.o
+	g++ -ggdb mainperfABR.o element.o abr.o -o mainperfABR.ex
+
+mainperfANR.ex: mainperfANR.o element.o anr.o
+	g++ -ggdb mainperfANR.o element.o anr.o -o mainperfANR.ex
 
 mainabr.o : mainabr.cpp element.h abr.h
 	g++ -ggdb -Wall -c mainabr.cpp
@@ -15,8 +18,11 @@ mainabr.o : mainabr.cpp element.h abr.h
 mainanr.o : mainanr.cpp element.h anr.h
 	g++ -ggdb -Wall -c mainanr.cpp
 
-mainperf.o : mainperf.cpp element.h anr.h
-	g++ -ggdb -Wall -c mainperf.cpp
+mainperfABR.o : mainperfABR.cpp element.h abr.h
+	g++ -ggdb -Wall -c mainperfABR.cpp
+
+mainperfANR.o : mainperfANR.cpp element.h anr.h
+	g++ -ggdb -Wall -c mainperfANR.cpp
 
 element.o : element.cpp element.h
 	g++ -ggdb -Wall -c element.cpp
