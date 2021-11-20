@@ -14,24 +14,17 @@
 
 int perf(int nbinsertion)
 {
-    int nbarbre = 1, i, j;
-    ANR arbre;
+    int nbarbre = 1000, i, j;
+    
     ANR bonjour[nbarbre];
     //ABR * tab[nbSkipList];
-
-
-    for (i = 0; i < nbarbre; i++)
-    { 
-        
-        bonjour[i] = arbre;
-
-    }
 
     std::chrono::time_point<std::chrono::system_clock> start, end;
 
     int tabmesure[nbarbre];
     for (int i =0; i<nbarbre;i++)
     { 
+        ANR arbre;
         start = std::chrono::system_clock::now();
         for (j = 0; j < nbinsertion; j++)
             arbre.insererElement(rand()%1000);

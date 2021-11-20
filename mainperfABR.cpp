@@ -14,29 +14,26 @@
 
 int perf(int nbinsertion)
 {
-    int nbarbre = 1, i, j;
-    ABR arbre;
+    int nbarbre = 10, i, j;
+    //ABR arbre;
     ABR bonjour[nbarbre];
     //ABR * tab[nbSkipList];
-
-
-    for (i = 0; i < nbarbre; i++)
-    { 
-        
-        bonjour[i] = arbre;
-
-    }
 
     std::chrono::time_point<std::chrono::system_clock> start, end;
 
     int tabmesure[nbarbre];
     for (int i =0; i<nbarbre;i++)
     { 
+        ABR arbre;
         start = std::chrono::system_clock::now();
         for (j = 0; j < nbinsertion; j++)
-            arbre.insererElement(rand()%1000);
-            
+        {
+            int r=rand()%1000;
+            std::cout<<r<<std::endl;
+            arbre.insererElement(r);
+        }  
         end = std::chrono::system_clock::now();
+        //std::cout<<i<<tabmesure[i]<<std::endl;
         tabmesure[i] = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
     }
         
@@ -49,7 +46,7 @@ int perf(int nbinsertion)
     int moyennemesure = sommemesure / nbarbre;
     
 
-    std::cout << "Temps d'insertion moyen : " << moyennemesure << "ms" << std::endl;
+    //std::cout << "Temps d'insertion moyen : " << moyennemesure << "ms" << std::endl;
     return moyennemesure;
 }
 
@@ -67,7 +64,7 @@ else
     //ofs<<"# nbinsertion"<<"  "<<"temps moyen"<<std::endl;
     for(int i=0; i<=10;i++)
     {
-        int a = perf(nbinsertionmax/10 * i);
+        int a = perf((nbinsertionmax/10) * i);
         ofs<<nbinsertionmax/10*i<<"  "<<a<<std::endl;
     }
 }

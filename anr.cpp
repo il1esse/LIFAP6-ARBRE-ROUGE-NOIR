@@ -22,71 +22,45 @@ ANR::ANR()
 void ANR::insererElement(const Elem & e)
 {
     int res=inseressArbre(adracine, e);
-    if(res==3)
-    {
-        if (adracine->fg->fd != nullptr)
+
+    if(res ==2)
         {
-            if(adracine->fg->fd->c==1)
+            if(adracine->info > e) 
             {
-                RotationGauche(adracine->fg);
-                RotationDroite(adracine);
+                if(adracine->fd != nullptr && adracine->fd->c == 1)//CAS 1
+                {
+                    MAJcouleur(adracine);
+                }
+                else if(adracine->fd == nullptr || (adracine->fd->c)==0) //CAS 2
+                {
+                    RotationDroite(adracine);
+                }
+                else if(adracine->fg->fd->info == e)
+                {
+                    RotationGauche(adracine->fg);
+                    RotationDroite(adracine);
+                }  
             }
-            else
+            else if (adracine->info < e)
             {
-                RotationDroite(adracine);
-            }            
-                
-        }
-        else
-        {
-            RotationDroite(adracine);
-        }
-
-    }
-
-    if(res==4)
-    {
-        if (adracine->fd->fg != nullptr) //(adracine->fd->fg != nullptr) cas 0108 ---(en cours cas cours)
-        {
-            if(adracine->fd->fg->c==1)
-            {
-                RotationDroite(adracine->fd);
-                RotationGauche(adracine);
-                
+                if(adracine->fg != nullptr && adracine->fg->c == 1)//CAS 3
+                {
+                    MAJcouleur(adracine);
+                }
+                else if(adracine->fg == nullptr || (adracine->fg->c)==0) //CAS 4
+                {
+                    RotationGauche(adracine);
+                }
+                else if(adracine->fd->fg->info == e)
+                {
+                    RotationDroite(adracine->fd);
+                    RotationGauche(adracine);
+                }
             }
-            else
-            {
-                RotationGauche(adracine);
-            }            
-        }
-        else
-        {
-            RotationGauche(adracine);
-        }
-            
-    }
 
-
-    //DiffHauteur2(adracine);
-
-    //if(adracine->diff)
-
-    //int h = (Hauteurmax(adracine) - Hauteurmin(adracine));
-
-    //cout<<h<<endl;
-
-    if(Hauteurmax(adracine)>2*(Hauteurmin(adracine)))
-    {
-        if(adracine->info>e)
-        {
-            RotationDroite(adracine);
-        }
-        else
-            RotationGauche(adracine);
-    }   
-
-    nbelem++;
-    adracine->c=0;
+        } 
+        adracine->c=0;
+        nbelem++;
 }
 
 int ANR::inseressArbre(Noeud* &a,const Elem & e)
@@ -103,8 +77,6 @@ int ANR::inseressArbre(Noeud* &a,const Elem & e)
     }
     else if(a->info > e) 
     {
-        //a->diff=DiffHauteur(a);
-        //cout<<"info = "<<a->info<<endl<<DiffHauteur(a)<<endl;
         res = inseressArbre(a->fg , e);
  
         if(res==1 && (a->c)==1) //SI MON FILS EST ROUGE ET QUE JE SUIS ROUGE JE RETURN 2
@@ -112,107 +84,58 @@ int ANR::inseressArbre(Noeud* &a,const Elem & e)
                 return 2;
         }
 
-        if(res==2) //SI MON FILS ET PETIT FILS SONT ROUGE ( COTE GAUCHE)
+        if(res ==2)
         {
-            if(a->fd != nullptr) //SI MON FILS DROIT EXISTE
+            if(a->fd != nullptr && a->fd->c == 1)//CAS 1 a gauche
             {
-                if((a->fd->c)==1) //ET IL EST ROUGE
-                {
-                        MAJcouleur(a); // ALORS MES 2 FILS DEVIENNENT NOIR MON PETIT FILS RESTE ROUGE ET JE DEVIENS ROUGE
-                        return 1;
-                }
+                MAJcouleur(a);
+                return 1;
             }
-            if(a->fd == nullptr || (a->fd->c)==0) //SI MON FILS DROIT NEXISTE PAS OU QUIL EST DE COULEUR NOIR ALORS JE RETURN 3
+            else if((a->fd == nullptr || (a->fd->c)==0) && a->fg->fg !=nullptr) //CAS 2
             {
-                
-                //RotationDroite(a);
-                return 3; 
+                RotationDroite(a);
+            }
+            else if((a->fd == nullptr || (a->fd->c)==0) && (a->fg->fd !=nullptr) && (a->fg->fd->info == e))//CAS3
+            {
+                RotationGauche(a->fg);
+                RotationDroite(a);
             }
         }
-
-        if(res==3) //(ARRIERE GRAND PERE) SI MON FILS N'A PAS DE FILS DROIT OU QUIL EST NOIR ALORS JE TOURNE A GAUCHE AVEC MON PETIT FILS 
-        //DROITE AVEC MON FILS
-        {
-            if(a->fg->fg->fd != nullptr)
-                {
-                    if(a->fg->fg->fd->c==1) 
-                    {
-                        RotationGauche(a->fg->fg);
-                        RotationDroite(a->fg);
-                    }
-                    else
-                    {
-                        RotationDroite(a->fg);
-                    }
-                    
-                }
-            else
-            {
-                RotationDroite(a->fg);
-
-            }
-        }
-
     }
-    else //si l'info du noeud est plus petit que l'element que l'on veut insérer
+    else if (a->info < e)
     {
-        //a->diff=DiffHauteur(a);
-        //cout<<"info = "<<a->info<<endl<<DiffHauteur(a)<<endl;
         res = inseressArbre(a->fd , e);
-
-        if(res==1 && (a->c)==1)
+ 
+        if(res==1 && (a->c)==1) //SI MON FILS EST ROUGE ET QUE JE SUIS ROUGE JE RETURN 2
         {
                 return 2;
         }
 
         if(res==2)
         {
-            if(a->fg != nullptr)
+            if(a->fg != nullptr && a->fg->c == 1)//CAS 1 a droite
             {
-                if((a->fg->c)==1)
-                {
-                        MAJcouleur(a);
-                        return 1;
-                }
+                MAJcouleur(a);
+                return 1;
             }
-            if(a->fg == nullptr || (a->fg->c)==0)
+            else if((a->fg == nullptr || (a->fg->c)==0) && (a->fd->fd !=nullptr) )//CAS 4
             {
-                
-                //RotationGauche(a);
-                return 4;
+                RotationGauche(a);
             }
-        }
-
-        if(res==4)
-        {
-            if(a->fd->fd->fg != nullptr)
+            else if((a->fg == nullptr || (a->fg->c)==0) && (a->fd->fg !=nullptr) && (a->fd->fg->info == e))//CAS 5
             {
-                if(a->fd->fd->fg->c==1)
-                {
-                    RotationDroite(a->fd->fd);
-                    RotationGauche(a->fd);
-                }
-                else
-                {
-                    RotationGauche(a->fd);
-                }
+                RotationDroite(a->fd);
+                RotationGauche(a);
             }
-            else
-            {
-                RotationGauche(a->fd);
-            }     
         }
     }
+    
+    
 }
 
 void ANR::affichage()
 {
-    //RotationDroite(adracine,adracine->fd);
-    //affichessArbre(adracine);
     AfficherInfixe(adracine,1);
-    //afficherhauteurmin(adracine);
-    //afficherhauteurmax(adracine);
-    
 }
 
 void ANR::affichessArbre(Noeud* &a)
@@ -260,18 +183,6 @@ void ANR::RotationDroite(Noeud * &pn) // on travaille ici dans l'arbre *this
     pn->fd->c=1;
 }
 
-/*void ANR::RotationDroiteDouble(Noeud * &pn) // on travaille ici dans l'arbre *this
-{
-    //cout << nbelem // this->nbelm
-    Noeud *pt;
-    pt = pn -> fg;
-    //pn->fg = pt -> fd;
-    pt -> fd = pn;
-    pn = pt;
-    pn->c=0;
-    pn->fd->c=1;
-}*/
-
 void ANR::RotationGauche(Noeud * &pn) // on travaille ici dans l'arbre *this
 {
     //cout << nbelem // this->nbelm
@@ -283,18 +194,6 @@ void ANR::RotationGauche(Noeud * &pn) // on travaille ici dans l'arbre *this
     pn->c=0;
     pn->fg->c=1;
 }
-
-/*void ANR::RotationGaucheDouble(Noeud * &pn) // on travaille ici dans l'arbre *this
-{
-    //cout << nbelem // this->nbelm
-    Noeud *pt;
-    pt = pn -> fd;
-    //pn->fd = pt -> fg;
-    pt -> fg = pn;
-    pn = pt;
-    pn->c=0;
-    pn->fg->c=1;
-}*/
 
 void ANR::MAJcouleur(Noeud * &n)
 {
