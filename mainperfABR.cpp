@@ -12,70 +12,112 @@
 
 
 
-void perf(const char * nomFichier,int nbinsertion)
+void perfinsertion(const char * nomFichier,int nbinsertion)
 {
     std::ofstream ofs;
     ofs.open(nomFichier);
-if(ofs.bad()) 
-    {std::cout<<"Impossible d'ouvrir le fichier "<<nomFichier<<" en ecriture \n"; exit(1);}
+    if(ofs.bad()) 
+        {std::cout<<"Impossible d'ouvrir le fichier "<<nomFichier<<" en ecriture \n"; exit(1);}
 
-else
-{
-    int nbarbre = 10;
-    ABR arbre;
-    //ABR bonjour[nbarbre];
-    //ABR * tab[nbSkipList];
+    else
+    {
+        int nbarbre = 1000;
+        ABR bonjour[nbarbre];
 
-    std::chrono::time_point<std::chrono::system_clock> start, end;
+        std::chrono::time_point<std::chrono::system_clock> start, end;
 
-    int tabmesure[nbarbre];
-    for (int i =0; i<nbinsertion;i++)
-    { 
-        //ABR arbre;
-        int sommemesure =0;
-        for (int j = 1; j <= nbarbre; j++)
-        {
+        float mesure;
+        for (int i =0; i<nbinsertion;i++)
+        { 
             start = std::chrono::system_clock::now();
-            int r=rand()%1000;
-            std::cout<<r<<std::endl;
-            arbre.insererElement(r);
+            for (int j = 0; j < nbarbre; j++)
+            {
+                
+                int r=rand()%1000;
+                //std::cout<<r<<std::endl;
+                
+                bonjour[j].insererElement(r);
+                /*bonjour[j].affichage();
+                std::cout<<std::endl;
+                std::cout<<std::endl;
+                std::cout<<std::endl;*/
+            }  
             end = std::chrono::system_clock::now();
-            tabmesure[j] = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
-            sommemesure = sommemesure +tabmesure[j];
+            mesure = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count(); 
+            float moyennemesure = mesure / nbarbre;
             
-        }  
-        
-        int moyennemesure = sommemesure / nbarbre;
-        
-        //std::cout<<i<<tabmesure[i]<<std::endl;
-        
-        
+            //std::cout<<i<<tabmesure[i]<<std::endl;
 
-    
-        ofs<<i<<"  "<<moyennemesure<<std::endl;
+            ofs<<i<<"  "<<moyennemesure<<std::endl;
+        }
+        //std::cout << "Temps d'insertion moyen : " << moyennemesure << "ms" << std::endl;
+        
+    ofs.close();
     }
         
-    
-    
+    }
 
-    //std::cout << "Temps d'insertion moyen : " << moyennemesure << "ms" << std::endl;
-    
-ofs.close();
-}
-    
-}
+void perfrecherche(const char * nomFichier,int nbinsertion)
+{
+    std::ofstream ofs;
+    ofs.open(nomFichier);
+    if(ofs.bad()) 
+        {std::cout<<"Impossible d'ouvrir le fichier "<<nomFichier<<" en ecriture \n"; exit(1);}
 
+    else
+    {
+        int nbarbre = 1000;
+        ABR bonjour[nbarbre];
 
+        std::chrono::time_point<std::chrono::system_clock> start, end;
+
+        float mesure;
+        for (int i =0; i<nbinsertion;i++)
+        { 
+           
+            for (int j = 0; j < nbarbre; j++)
+            {
+                
+                int r=rand()%1000;
+                //std::cout<<r<<std::endl;
+                
+                bonjour[j].insererElement(r);
+                
+                /*bonjour[j].affichage();
+                std::cout<<std::endl;
+                std::cout<<std::endl;
+                std::cout<<std::endl;*/
+            }  
+            
+            start = std::chrono::system_clock::now();
+            for(int k=0;k<nbarbre;k++)
+                {
+                    int r2=rand()%1000;
+                    bonjour[k].recherche(r2);
+                }
+            //std::cout<<i<<tabmesure[i]<<std::endl;
+            end = std::chrono::system_clock::now();
+            mesure = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count(); 
+            float moyennemesure = mesure / nbarbre;
+            ofs<<i<<"  "<<moyennemesure<<std::endl;
+        }
+        //std::cout << "Temps d'insertion moyen : " << moyennemesure << "ms" << std::endl;
+        
+    ofs.close();
+    }
+        
+    }
 
 
 int main()
 {
     int nbinsertionmax;
-    std::cout<<"Cb d'insertion max voulez vous faire ?"<<std::endl;
-    std::cin>>nbinsertionmax;
+    //std::cout<<"Cb d'insertion max voulez vous faire ?"<<std::endl;
+    //std::cin>>nbinsertionmax;
 
+    nbinsertionmax=4500;
     //int moyennemesure = perf(i);
-    perf("performance",nbinsertionmax);
+    perfinsertion("performance_recherche_ABR",nbinsertionmax);
 
     return 0;
 }

@@ -33,15 +33,14 @@ void ABR::inseressArbre(Noeud* &a,const Elem & e)
     {
         a = new Noeud(e);
     }
-    else 
-    if(a->info > e)
-    {
-        inseressArbre(a->fd , e);
-
-    }
-    else
+    else if(a->info > e)
     {
         inseressArbre(a->fg , e);
+
+    }
+    else if(a->info < e)
+    {
+        inseressArbre(a->fd , e);
     }
 }
 
@@ -71,13 +70,13 @@ void ABR::AfficherInfixe (Noeud *n, int nbespace) const
 {
     if(n != nullptr)
     {
-        AfficherInfixe(n->fg, nbespace+5);
+        AfficherInfixe(n->fd, nbespace+5);
         std::cout<<std::endl;
         for(int i=0; i<nbespace;i++)
             std::cout<<" ";
         afficheElement(n->info);
         std::cout<<std::endl;
-        AfficherInfixe(n->fd, nbespace+5);
+        AfficherInfixe(n->fg, nbespace+5);
     }
 }
 
@@ -87,9 +86,8 @@ bool ABR::recherche(const Elem & e)
 {
     bool a =recherchessarbre(adracine,e);
     //std::cout<<adracine->info<<std::endl;
-    std::cout<<a<<std::endl;
+    //std::cout<<a<<std::endl;
     return a;
-    
 }
 
 bool ABR::recherchessarbre(Noeud* &a, const Elem &e)
@@ -104,7 +102,7 @@ bool ABR::recherchessarbre(Noeud* &a, const Elem &e)
         recherchessarbre(a->fg,e);
     }
     return false;*/
-
+    //std::cout<<a->info<<std::endl;
     if(a == nullptr)
     {
         return false;
@@ -115,12 +113,12 @@ bool ABR::recherchessarbre(Noeud* &a, const Elem &e)
     }
     else if(a->info > e)
     {
-        recherchessarbre(a->fd,e);
+        recherchessarbre(a->fg,e);
         
     }
-    else
+    else if(a->info < e)
     {
-         recherchessarbre(a->fg,e);
+         recherchessarbre(a->fd,e);
     }
        
 }

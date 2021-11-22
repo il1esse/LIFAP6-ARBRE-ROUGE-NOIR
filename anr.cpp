@@ -173,7 +173,6 @@ void ANR::AfficherInfixe (Noeud *n, int nbespace) const
 
 void ANR::RotationDroite(Noeud * &pn) // on travaille ici dans l'arbre *this
 {
-    //cout << nbelem // this->nbelm
     Noeud *pt;
     pt = pn -> fg;
     pn->fg = pt -> fd;
@@ -305,6 +304,56 @@ void ANR::afficherhauteurmax(Noeud *&n)
     std::cout<<"max : "<<b<<std::endl;;
 }
 
+
+bool ANR::recherche(const Elem & e)
+{
+    bool a =recherchessarbre(adracine,e);
+    //std::cout<<adracine->info<<std::endl;
+    //std::cout<<a<<std::endl;
+    /*if(a==0)
+    {
+        std::cout<<"pas trouve"<<std::endl;
+    }
+    else
+    {
+        std::cout<<"trouve"<<std::endl;
+    }
+    return a;*/
+    
+}
+
+bool ANR::recherchessarbre(Noeud* &a, const Elem &e)
+{
+    /*if(a->info == e)
+    {
+        return true;
+    }
+    else 
+    {
+        recherchessarbre(a->fd,e);
+        recherchessarbre(a->fg,e);
+    }
+    return false;*/
+
+    if(a == nullptr)
+    {
+        return false;
+    }
+    else if (a->info == e)
+    {
+        return true;
+    }
+    else if(a->info > e)
+    {
+        recherchessarbre(a->fg,e);
+        
+    }
+    else
+    {
+         recherchessarbre(a->fd,e);
+    }
+       
+}
 /*
 
 int ANR::DiffHauteur(Noeud *&n)

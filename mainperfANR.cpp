@@ -12,62 +12,93 @@
 
 
 
-int perf(int nbinsertion)
+void perfinsertionANR(const char * nomFichier,int nbinsertion)
 {
-    int nbarbre = 1000, i, j;
-    
-    ANR bonjour[nbarbre];
-    //ABR * tab[nbSkipList];
+    std::ofstream ofs;
+    ofs.open(nomFichier);
+    if(ofs.bad()) 
+        {std::cout<<"Impossible d'ouvrir le fichier "<<nomFichier<<" en ecriture \n"; exit(1);}
 
-    std::chrono::time_point<std::chrono::system_clock> start, end;
+    else
+    {
+        int nbarbre = 1000;
+        ANR arbreANR[nbarbre];
 
-    int tabmesure[nbarbre];
-    for (int i =0; i<nbarbre;i++)
-    { 
-        ANR arbre;
-        start = std::chrono::system_clock::now();
-        for (j = 0; j < nbinsertion; j++)
-            arbre.insererElement(rand()%1000);
+        std::chrono::time_point<std::chrono::system_clock> start, end;
+
+        float mesure;
+        for (int i =0; i<nbinsertion;i++)
+        { 
+            start = std::chrono::system_clock::now();
+            for (int j = 0; j < nbarbre; j++)
+            {
+                
+                int r=rand()%1000;
+                //std::cout<<r<<std::endl;
+                
+                arbreANR[j].insererElement(r);
+                //arbreANR[j].affichage();
+            }  
+            end = std::chrono::system_clock::now();
+            mesure = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count(); 
+            float moyennemesure = mesure / nbarbre;
             
-        end = std::chrono::system_clock::now();
-        tabmesure[i] = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
-    }
+            //std::cout<<i<<tabmesure[i]<<std::endl;
+
+            ofs<<i<<"  "<<moyennemesure<<std::endl;
+        }
+        //std::cout << "Temps d'insertion moyen : " << moyennemesure << "ms" << std::endl;
         
-    int sommemesure =0;
-    for (int i =0; i<nbarbre;i++)
-    {
-        sommemesure = sommemesure +tabmesure[i];
+    ofs.close();
     }
-
-    int moyennemesure = sommemesure / nbarbre;
-    
-
-    std::cout << "Temps d'insertion moyen : " << moyennemesure << "ms" << std::endl;
-    return moyennemesure;
 }
 
-void ecrireFichierEntiers(const char * nomFichier,int nbinsertionmax)
-//preconditions : nomFichier chaine de caracteres designant le nom du fichier a creer
-//postcondition : le fichier nomFichier contient nb entiers separes par des espaces
+void perfrechercheANR(const char * nomFichier,int nbinsertion)
 {
-std::ofstream ofs;
- ofs.open(nomFichier);
-if(ofs.bad()) 
-    {std::cout<<"Impossible d'ouvrir le fichier "<<nomFichier<<" en ecriture \n"; exit(1);}
+    std::ofstream ofs;
+    ofs.open(nomFichier);
+    if(ofs.bad()) 
+        {std::cout<<"Impossible d'ouvrir le fichier "<<nomFichier<<" en ecriture \n"; exit(1);}
 
-else
-{   
-    //ofs<<"# nbinsertion"<<"  "<<"temps moyen"<<std::endl;
-    for(int i=0; i<=10;i++)
+    else
     {
-        int a = perf(nbinsertionmax/10 * i);
-        ofs<<nbinsertionmax/10*i<<"  "<<a<<std::endl;
+        int nbarbre = 1000;
+        ANR arbreANR[nbarbre];
+
+        std::chrono::time_point<std::chrono::system_clock> start, end;
+
+        float mesure;
+        for (int i =0; i<nbinsertion;i++)
+        { 
+           
+            for (int j = 0; j < nbarbre; j++)
+            {
+                
+                int r=rand()%1000;
+                //std::cout<<r<<std::endl;
+                
+                arbreANR[j].insererElement(r);
+                //arbreANR[j].affichage();
+            }  
+            
+            start = std::chrono::system_clock::now();
+            for(int k=0;k<nbarbre;k++)
+            {
+                int r2=rand()%1000;
+                arbreANR[k].recherche(r2);
+            }
+            end = std::chrono::system_clock::now();
+            mesure = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count(); 
+            float moyennemesure = mesure / nbarbre;
+            //std::cout<<i<<tabmesure[i]<<std::endl;
+
+            ofs<<i<<"  "<<moyennemesure<<std::endl;
+        }
+        //std::cout << "Temps d'insertion moyen : " << moyennemesure << "ms" << std::endl;
+        
+    ofs.close();
     }
 }
-
-ofs.close();
-}
-
 
 
 
@@ -79,7 +110,9 @@ int main()
     std::cin>>nbinsertionmax;
 
     //int moyennemesure = perf(i);
-    ecrireFichierEntiers("performance",nbinsertionmax);
+    
+    perfinsertionANR("performance_insertion_ANR",nbinsertionmax);
+    perfrechercheANR("performance_recherche_ANR",nbinsertionmax);
 
     return 0;
 }

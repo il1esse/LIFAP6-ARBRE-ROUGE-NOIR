@@ -79,5 +79,7 @@ int main()
     arbre.insererElement(386);*/
 
     arbre.affichage();
+    arbre.recherche(5);
+    arbre.recherche(12);
     return 0;
 }

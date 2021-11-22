@@ -37,7 +37,7 @@ class ANR
 
     void afficherhauteurmin(Noeud *&n);
     void afficherhauteurmax(Noeud *&n);
-
+    bool recherche(const Elem & e);
     private: 
     
     
@@ -57,7 +57,7 @@ class ANR
 
     int Hauteurmin(Noeud *&n);
     int Hauteurmax(Noeud *&n);
-
+    bool recherchessarbre(Noeud* &a, const Elem &e);
 /*
     int DiffHauteur(Noeud *&n);
 
