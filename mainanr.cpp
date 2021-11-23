@@ -18,7 +18,7 @@ int main()
     arbre.insererElement(7);
     arbre.insererElement(8);
     arbre.insererElement(9);
-    /*arbre.insererElement(10);
+    arbre.insererElement(10);
     arbre.insererElement(11);
     arbre.insererElement(12);
     arbre.insererElement(13);
