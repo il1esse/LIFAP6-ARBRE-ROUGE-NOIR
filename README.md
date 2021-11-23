@@ -94,11 +94,9 @@ make all
 
 
 
-Le fichier makefile va alors s'occuper des compilation et éditions de lien de tous les fichiers du programme. Elle va aussi créer dans le dossier bin/ les 4 exécutables dont on a besoin :
+Le fichier makefile va alors s'occuper des compilation et éditions de lien de tous les fichiers du programme. Elle va aussi créer dans le dossier bin/ les 3 exécutables dont on a besoin :
 
-mainanr.ex permet la création d'arbre rouge noir. Dans le main : pour inserer des éléments on utilise la fonction insererElement(). On peut afficher l'arbre avec la fonction afficher(). On peut aussi rechercher un élément avec la fonction rechercher().  
-
-mainabr.ex permet la création d'arbre binaire de recherche. Les fonctions à écrire dans le main sont les même quand pour les ANR : insererElement(), afficher() et rechercher().
+main.ex permet la création d'arbre rouge noir ou d'un arbre binaire de recherche selon ce qui est choisi dans le "collection.h". Dans le main : pour inserer des éléments on utilise la fonction insererElement(). On peut afficher l'arbre avec la fonction afficher(). On peut aussi rechercher un élément avec la fonction rechercher().  
 
 mainperfANR.ex permet de connaitre les performances de l'arbre rouge noir pour l'insertion et pour la recherche. Le programme les écrit dans une fichier .txt. On peut faire une courbe (avec gnuplot par exemple) avec ces données pour voir les performances en fonction du nombre d’élément ajouté.
 
@@ -118,13 +116,11 @@ Aucune exigence particulière.
 
 
 
-Pour utiliser les 4 exécutables après les avoir créés avec la fonction make on utilise
+Pour utiliser les 3 exécutables après les avoir créés avec la fonction make on utilise
 
 ```c++
 
-./bin/mainabr.ex	//Pour construire les arbres binaire de recherche.
-
-./bin/mainanr.ex		//Pour construire les arbres rouge noir.
+./bin/main.ex		//Pour construire les arbres rouge noir ou les arbres binaire de recherche.
 
 ./bin/mainperfABR.ex	//Pour calculer les performances des arbres binaire de recherche.
 
