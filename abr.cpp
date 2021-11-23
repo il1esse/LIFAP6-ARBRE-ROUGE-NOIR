@@ -2,25 +2,26 @@
 #include <iostream>
 #include <fstream> //ifstream, ofstream
 
-Noeud::Noeud(Elem e)
+Noeud::Noeud(Elem e) //constructeur noeud qui donne l'element e à l'info, initialise son fils droit et gauche à nullptr
 {
     info = e;
     fg = nullptr;
     fd = nullptr;
 }
 
-Noeud::~Noeud(){
+Noeud::~Noeud() //destructeur de noeud
+{
     if(fd != nullptr) delete fd;
     if(fg != nullptr) delete fg;
 }
 
-ABR::ABR()
+ABR::ABR() //constructeur arbre, initialise la racine à nullptr et le nombre d'élément à zéro
 {
     adracine = nullptr;
     nbelem = 0;
 }
 
-void ABR::insererElement(const Elem & e)
+void ABR::insererElement(const Elem & e) //procédure qui appelle insérerssarbre
 {
     inseressArbre(adracine, e);
     nbelem++;
@@ -29,41 +30,24 @@ void ABR::insererElement(const Elem & e)
 void ABR::inseressArbre(Noeud* &a,const Elem & e)
 {
 
-    if(a == nullptr)
+    if(a == nullptr) //si l'arbre est vide ou on se trouve en bout d'arbre alors on creer un nouveau noeud avec l'élément à insérer
     {
         a = new Noeud(e);
     }
-    else if(a->info > e)
+    else if(a->info > e) //si l'info du noeud sur lequel on se trouve est plus grand que l'élément à insérer on relance la procédure sur son fils gauche
     {
         inseressArbre(a->fg , e);
 
     }
-    else if(a->info < e)
+    else if(a->info < e) //si l'info du noeud sur lequel on se trouve est plus petit que l'élément à insérer on relance la procédure sur son fils droit
     {
         inseressArbre(a->fd , e);
     }
 }
 
-void ABR::affichage()
+void ABR::affichage() //procédure d'affichage qui appelle la afficherinfixe
 {
-    //RotationDroite(adracine,adracine->fd);
-    //affichessArbre(adracine);
     AfficherInfixe(adracine,1);
-}
-
-void ABR::affichessArbre(Noeud* &a)
-{   
-    if(a != nullptr)
-    {
-        if(a->fg !=nullptr && a->fd !=nullptr)
-        std::cout<<"    "<<a->fg->info<<"   "<<a->fd->info<<"   "<<std::endl;
-        else if(a->fg !=nullptr)
-        std::cout<<"    "<<a->fg->info<<"   ";
-        else if(a->fd !=nullptr)
-        std::cout<<"    "<<a->fd->info<<"   "<<std::endl;
-        affichessArbre(a->fg);
-        affichessArbre(a->fd);
-    }
 }
 
 void ABR::AfficherInfixe (Noeud *n, int nbespace) const
@@ -82,62 +66,31 @@ void ABR::AfficherInfixe (Noeud *n, int nbespace) const
 
 
 
-bool ABR::recherche(const Elem & e)
+bool ABR::recherche(const Elem & e) //procédure de recherche qui utilise recherchessarbre
 {
     bool a =recherchessarbre(adracine,e);
-    //std::cout<<adracine->info<<std::endl;
-    //std::cout<<a<<std::endl;
+
     return a;
 }
 
-bool ABR::recherchessarbre(Noeud* &a, const Elem &e)
+bool ABR::recherchessarbre(Noeud* &a, const Elem &e) //procédure de recherche
 {
-    /*if(a->info == e)
-    {
-        return true;
-    }
-    else 
-    {
-        recherchessarbre(a->fd,e);
-        recherchessarbre(a->fg,e);
-    }
-    return false;*/
-    //std::cout<<a->info<<std::endl;
-    if(a == nullptr)
+    if(a == nullptr) //si l'arbre est vide on retourne faux
     {
         return false;
     }
-    else if (a->info == e)
+    else if (a->info == e) //si l'info du noeud sur lequel on se trouve est égal à l'élément recherché alors on retourne vrai
     {
         return true;
     }
-    else if(a->info > e)
+    else if(a->info > e) //sinon si l'info est plus grande ou relance la fonction de recherche sur le fils gauche
     {
         recherchessarbre(a->fg,e);
         
     }
-    else if(a->info < e)
+    else if(a->info < e) //sinon on la relance sur le fils droit
     {
          recherchessarbre(a->fd,e);
     }
        
-}
-
-void ABR::creeFichierEntiers(const char * nomFichier, int nb)
-//preconditions : nomFichier chaine de caracteres designant le nom du fichier a creer
-//postcondition : le fichier nomFichier contient nb entiers separes par des espaces
-{
-std::ofstream ofs;
- ofs.open(nomFichier);
-if(ofs.bad()) 
-    {std::cout<<"Impossible d'ouvrir le fichier "<<nomFichier<<" en ecriture \n"; exit(1);}
-
-for(int i=0;i<nb;i++)
- {
-    int temp;
-    std::cout << "Entier suivant : ";
-    std::cin >> temp; //Ou utilisez la version robuste de saisie d'un int
-     ofs << temp <<' ';//Remarquez que l'on separe les int par des espaces
-    }
-ofs.close();
 }
