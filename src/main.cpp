@@ -19,7 +19,7 @@ int main()
     arbre.recherche(6);
     arbre.recherche(12);*/
     
-    /*arbre.insererElement(0);
+    arbre.insererElement(0);
     arbre.insererElement(1);
     arbre.insererElement(2);
     arbre.insererElement(3);
@@ -38,7 +38,7 @@ int main()
     arbre.insererElement(16);
     arbre.insererElement(17);
     arbre.insererElement(18);
-    arbre.insererElement(19);*/
+    arbre.insererElement(19);
 
     //arbre.insererElement(690);
     //arbre.insererElement(59);

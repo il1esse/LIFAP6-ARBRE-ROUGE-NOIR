@@ -25,14 +25,14 @@ class ANR
    
     public :
     ANR();
-    //~ANR();
+    ~ANR();
     
     void insererElement(const Elem & e);
 
     void affichage();
 
     void affichessArbre(NoeudANR* &a);
-
+    void detruire(NoeudANR* &a);
     void afficherhauteurmin(NoeudANR *&n);
     void afficherhauteurmax(NoeudANR *&n);
     bool recherche(const Elem & e,bool affichage);

@@ -11,11 +11,32 @@ NoeudANR::NoeudANR(Elem e) //constructeur NoeudANR qui donne l'element e à l'in
     c = 1;
 }
 
+NoeudANR::~NoeudANR() // destructeur de noeud
+{
+    delete fg;
+    delete fd;
+}
+
 ANR::ANR() //constructeur de arbre rouge noir, initialise la racine à nullptr et le nombre d'élément à zéro
 {
     adracine = nullptr;
     nbelem = 0;
+}
 
+ANR::~ANR() //destructeur de l'arbre
+{
+    detruire(adracine);
+    adracine = nullptr;
+}
+
+void ANR::detruire(NoeudANR* &a) //procédure qui parcours tout l'arbre pour le détruire
+{
+    if(a->fg != nullptr)
+        detruire(a->fg);
+    else if(a->fd != nullptr)
+        detruire(a->fd);
+    else 
+        delete a;
 }
 
 void ANR::insererElement(const Elem & e) //procédure d'insertion d'un élément dans un arbre, prend un élément en paramètre

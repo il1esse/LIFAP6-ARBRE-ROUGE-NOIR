@@ -23,8 +23,8 @@ class ABR
    
     public :
     ABR();
-    //ABR::ABR(const ABR &abr);
-    //~ABR();
+    
+    ~ABR();
     
     void insererElement(const Elem & e);
 
@@ -38,6 +38,7 @@ class ABR
 
     void creeFichierEntiers(const char * nomFichier, int nb);
     
+    void detruire(Noeud* &a);
     private: 
     
     void inseressArbre(Noeud* &a,const Elem & e);

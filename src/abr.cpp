@@ -9,16 +9,32 @@ Noeud::Noeud(Elem e) //constructeur noeud qui donne l'element e à l'info, initi
     fd = nullptr;
 }
 
-Noeud::~Noeud() //destructeur de noeud
+Noeud::~Noeud() // destructeur de noeud
 {
-    if(fd != nullptr) delete fd;
-    if(fg != nullptr) delete fg;
+    delete fg;
+    delete fd;
 }
 
 ABR::ABR() //constructeur arbre, initialise la racine à nullptr et le nombre d'élément à zéro
 {
     adracine = nullptr;
     nbelem = 0;
+}
+
+ABR::~ABR() //destructeur de l'arbre
+{
+    detruire(adracine);
+    adracine = nullptr;
+}
+
+void ABR::detruire(Noeud* &a) //procédure qui parcours tout l'arbre pour le détruire
+{
+    if(a->fg != nullptr)
+        detruire(a->fg);
+    else if(a->fd != nullptr)
+        detruire(a->fd);
+    else 
+        delete a;
 }
 
 void ABR::insererElement(const Elem & e) //procédure qui appelle insérerssarbre
