@@ -1,41 +1,33 @@
-all: mainabr.ex mainperfABR.ex mainperfANR.ex mainanr.ex
+all: bin/main.ex bin/mainperfABR.ex bin/mainperfANR.ex
 
-mainabr.ex: mainabr.o element.o abr.o
-	g++ -ggdb mainabr.o element.o abr.o -o mainabr.ex
+bin/main.ex: obj/main.o obj/element.o obj/abr.o obj/anr.o
+	g++ -ggdb obj/main.o obj/element.o obj/abr.o obj/anr.o -o bin/main.ex
+
+bin/mainperfABR.ex: obj/mainperfABR.o obj/element.o obj/abr.o
+	g++ -ggdb obj/mainperfABR.o obj/element.o obj/abr.o -o bin/mainperfABR.ex
+
+bin/mainperfANR.ex: obj/mainperfANR.o obj/element.o obj/anr.o
+	g++ -ggdb obj/mainperfANR.o obj/element.o obj/anr.o -o bin/mainperfANR.ex
+
+obj/main.o: src/main.cpp src/element.h src/abr.h src/anr.h src/collection.h
+	g++ -ggdb -Wall -c src/main.cpp -o obj/main.o
+
+obj/anr.o : src/anr.cpp src/anr.h
+	g++ -ggdb -Wall -c src/anr.cpp -o obj/anr.o
+
+obj/abr.o : src/abr.cpp src/abr.h
+	g++ -ggdb -Wall -c src/abr.cpp -o obj/abr.o
+
+obj/mainperfABR.o : src/mainperfABR.cpp src/element.h src/abr.h
+	g++ -ggdb -Wall -c src/mainperfABR.cpp -o obj/mainperfABR.o
+
+obj/mainperfANR.o : src/mainperfANR.cpp src/element.h src/anr.h
+	g++ -ggdb -Wall -c src/mainperfANR.cpp -o obj/mainperfANR.o
 	
-mainanr.ex: mainanr.o element.o anr.o
-	g++ -ggdb mainanr.o element.o anr.o -o mainanr.ex
-
-mainperfABR.ex: mainperfABR.o element.o abr.o
-	g++ -ggdb mainperfABR.o element.o abr.o -o mainperfABR.ex
-
-mainperfANR.ex: mainperfANR.o element.o anr.o
-	g++ -ggdb mainperfANR.o element.o anr.o -o mainperfANR.ex
-
-mainabr.o : mainabr.cpp element.h abr.h
-	g++ -ggdb -Wall -c mainabr.cpp
-
-mainanr.o : mainanr.cpp element.h anr.h
-	g++ -ggdb -Wall -c mainanr.cpp
-
-mainperfABR.o : mainperfABR.cpp element.h abr.h
-	g++ -ggdb -Wall -c mainperfABR.cpp
-
-mainperfANR.o : mainperfANR.cpp element.h anr.h
-	g++ -ggdb -Wall -c mainperfANR.cpp
-
-element.o : element.cpp element.h
-	g++ -ggdb -Wall -c element.cpp
-
-anr.o : anr.cpp anr.h
-	g++ -ggdb -Wall -c anr.cpp
-
-abr.o : abr.cpp abr.h
-	g++ -ggdb -Wall -c abr.cpp
-	
+obj/element.o : src/element.cpp src/element.h
+	g++ -ggdb -Wall -c src/element.cpp -o obj/element.o
 
 clean :
-	-rm *.o 
-	-rm *.ex
-veryclean : clean 
-	-rm *.ex
+	-rm obj/*.o 
+	-rm bin/*.ex
+
