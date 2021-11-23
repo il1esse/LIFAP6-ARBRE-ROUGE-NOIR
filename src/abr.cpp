@@ -1,6 +1,5 @@
 #include "abr.h"
 #include <iostream>
-#include <fstream> //ifstream, ofstream
 
 Noeud::Noeud(Elem e) //constructeur noeud qui donne l'element e à l'info, initialise son fils droit et gauche à nullptr
 {
@@ -61,7 +60,7 @@ void ABR::inseressArbre(Noeud* &a,const Elem & e)
     }
 }
 
-void ABR::affichage() //procédure d'affichage qui appelle la afficherinfixe
+void ABR::affichage() //procédure d'affichage qui appelle la procédure afficherinfixe
 {
     AfficherInfixe(adracine,1);
 }
@@ -80,9 +79,8 @@ void ABR::AfficherInfixe (Noeud *n, int nbespace) const
     }
 }
 
-
-
-bool ABR::recherche(const Elem & e,bool affichage) //procédure de recherche qui utilise recherchessarbre
+bool ABR::recherche(const Elem & e,bool affichage) //procédure de recherche qui utilise recherchessarbre, si le booléen affichage est vrai alors on
+//affichera "trouvé" sinon on ne le fera pas
 {
     bool a =recherchessarbre(adracine,e);
     if(affichage == true)
@@ -112,9 +110,7 @@ bool ABR::recherchessarbre(Noeud* &a, const Elem &e) //procédure de recherche
     }
     else if(a->info > e) //sinon si l'info est plus grande ou relance la fonction de recherche sur le fils gauche
     {
-        
         return recherchessarbre(a->fg,e);
-        
     }
     else//sinon on la relance sur le fils droit
     {

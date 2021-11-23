@@ -1,8 +1,6 @@
 #include "anr.h"
 #include <iostream>
 
-using namespace std;
-
 NoeudANR::NoeudANR(Elem e) //constructeur NoeudANR qui donne l'element e à l'info, initialise son fils droit et gauche à nullptr et sa couleur à rouge
 {
     info = e;
@@ -40,48 +38,47 @@ void ANR::detruire(NoeudANR* &a) //procédure qui parcours tout l'arbre pour le 
 }
 
 void ANR::insererElement(const Elem & e) //procédure d'insertion d'un élément dans un arbre, prend un élément en paramètre
-
 {
     int res=inseressArbre(adracine, e); 
 
     if(res ==2)
+    {
+        if(adracine->info > e) 
         {
-            if(adracine->info > e) 
+            if(adracine->fd != nullptr && adracine->fd->c == 1)//CAS 1
             {
-                if(adracine->fd != nullptr && adracine->fd->c == 1)//CAS 1
-                {
-                    MAJcouleur(adracine);
-                }
-                else if(adracine->fd == nullptr || (adracine->fd->c)==0) //CAS 2
-                {
-                    RotationDroite(adracine);
-                }
-                else if(adracine->fg->fd->info == e)
-                {
-                    RotationGauche(adracine->fg);
-                    RotationDroite(adracine);
-                }  
+                MAJcouleur(adracine);
             }
-            else if (adracine->info < e)
+            else if(adracine->fd == nullptr || (adracine->fd->c)==0) //CAS 2
             {
-                if(adracine->fg != nullptr && adracine->fg->c == 1)//CAS 3 
-                {
-                    MAJcouleur(adracine);
-                }
-                else if(adracine->fg == nullptr || (adracine->fg->c)==0) //CAS 4
-                {
-                    RotationGauche(adracine);
-                }
-                else if(adracine->fd->fg->info == e)
-                {
-                    RotationDroite(adracine->fd);
-                    RotationGauche(adracine);
-                }
+                RotationDroite(adracine);
             }
+            else if(adracine->fg->fd->info == e)
+            {
+                RotationGauche(adracine->fg);
+                RotationDroite(adracine);
+            }  
+        }
+        else if (adracine->info < e)
+        {
+            if(adracine->fg != nullptr && adracine->fg->c == 1)//CAS 3 
+            {
+                MAJcouleur(adracine);
+            }
+            else if(adracine->fg == nullptr || (adracine->fg->c)==0) //CAS 4
+            {
+                RotationGauche(adracine);
+            }
+            else if(adracine->fd->fg->info == e)
+            {
+                RotationDroite(adracine->fd);
+                RotationGauche(adracine);
+            }
+        }
 
-        } 
-        adracine->c=0;
-        nbelem++;
+    } 
+    adracine->c=0;
+    nbelem++;
 }
 
 int ANR::inseressArbre(NoeudANR* &a,const Elem & e)
@@ -103,7 +100,7 @@ int ANR::inseressArbre(NoeudANR* &a,const Elem & e)
  
         if(res==1 && (a->c)==1) //Si mon fils est rouge et que je suis rouge je retourne 2
         {
-                return 2;
+            return 2;
         }
 
         if(res ==2) //Si mon fils est rouge et que je suis rouge
@@ -135,7 +132,7 @@ int ANR::inseressArbre(NoeudANR* &a,const Elem & e)
  
         if(res==1 && (a->c)==1) //Si mon fils est rouge et que je suis rouge je retourne 2
         {
-                return 2;
+            return 2;
         }
 
         if(res==2) //Si mon fils est rouge et que je suis rouge
@@ -160,7 +157,6 @@ int ANR::inseressArbre(NoeudANR* &a,const Elem & e)
             }
         }
     }
-    
     return 0;
 }
 
@@ -189,8 +185,8 @@ void ANR::AfficherInfixe (NoeudANR *n, int nbespace) const //procédure d'affich
 
 void ANR::RotationDroite(NoeudANR * &pn) //procédure de rotation droite
 {
-    NoeudANR *pt; //pointeur de travail pt
-    pt = pn -> fg; //pt pointe sur le fils gauche du NoeudANR
+    NoeudANR *pt; 
+    pt = pn -> fg; 
     pn->fg = pt -> fd; 
     pt -> fd = pn;
     pn = pt;
@@ -198,9 +194,9 @@ void ANR::RotationDroite(NoeudANR * &pn) //procédure de rotation droite
     pn->fd->c=1;
 }
 
-void ANR::RotationGauche(NoeudANR * &pn)
+void ANR::RotationGauche(NoeudANR * &pn) //procédure de rotation gauche
 {
-    NoeudANR *pt; //pointeur de travail
+    NoeudANR *pt;
     pt = pn -> fd;
     pn->fd = pt -> fg;
     pt -> fg = pn;
@@ -251,5 +247,4 @@ bool ANR::recherchessarbre(NoeudANR* &a, const Elem &e) //procédure qui recherc
     {
         return recherchessarbre(a->fd,e);
     }
-    //return false;
 }

@@ -30,5 +30,5 @@ obj/element.o : src/element.cpp src/element.h
 clean :
 	-rm obj/*.o 
 	-rm bin/*.ex
-	-rm data/*
+	-rm data/*.txt
 
